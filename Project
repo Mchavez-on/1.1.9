@@ -1,0 +1,72 @@
+#   a118_turtles_in_traffic.py
+#   Move turtles horizontally and vertically across screen.
+#   Stopping turtles when they collide.
+import turtle as trtl
+#resizing canvas
+wn = trtl.Screen()
+wn.screensize(canvwidth=.5, canvheight=.5)
+
+# create two empty lists of turtles, adding to them later
+horiz_turtles = []
+vert_turtles = []
+
+# use interesting shapes and colors
+turtle_shapes = ["arrow", "turtle", "circle", "square", "triangle", "classic"]
+horiz_colors = ["red", "blue", "green", "orange", "purple", "gold"]
+vert_colors = ["darkred", "darkblue", "lime", "salmon", "indigo", "brown"]
+
+#Locating turtles
+tloc = 50
+for s in turtle_shapes:
+
+  ht = trtl.Turtle(shape=s)
+  horiz_turtles.append(ht)
+  ht.penup()
+  new_color = horiz_colors.pop()
+  ht.fillcolor(new_color)
+  ht.goto(-350, tloc)
+  ht.setheading(0)
+
+  vt = trtl.Turtle(shape=s)
+  vert_turtles.append(vt)
+  vt.penup()
+  new_color = vert_colors.pop()
+  vt.fillcolor(new_color)
+  vt.goto( -tloc, 350)
+  vt.setheading(270)
+  
+  tloc += 50
+
+# Keeps turtles from exiting the canvas
+steps = 0
+while len(horiz_turtles) > 0: #length of the list
+    for t in horiz_turtles:
+        t.forward(15)
+        if t.xcor() > -10:
+            t.right(180)
+        elif t.xcor() < -390:
+            t.left(180)
+    for t in vert_turtles:
+        t.forward(25)
+        if t.ycor() < 10:
+            t.right(180)
+        elif t.ycor() > 390:
+            t.left(180)
+            
+#Have turtles change color while intersecting
+x1 = ht.setheading(0)
+x2 = t.xcor()
+y1 = vt.setheading(270)
+y2 = t.vcor()
+if abs(x1-x2) == 20:
+  ht.fillcolor(new_color)
+if abs(y1-y2) == 20:
+  vt.fillcolor(new_color)
+
+
+    
+steps = steps + 1
+
+
+wn = trtl.Screen()
+wn.mainloop()
