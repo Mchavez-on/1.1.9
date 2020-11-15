@@ -2,6 +2,7 @@
 #   Move turtles horizontally and vertically across screen.
 #   Stopping turtles when they collide.
 import turtle as trtl
+import random
 #resizing canvas
 wn = trtl.Screen()
 wn.screensize(canvwidth=.5, canvheight=.5)
@@ -22,20 +23,23 @@ for s in turtle_shapes:
   ht = trtl.Turtle(shape=s)
   horiz_turtles.append(ht)
   ht.penup()
-  new_color = horiz_colors.pop()
-  ht.fillcolor(new_color)
+  #new_color = horiz_colors.pop()
+  htnew_color = horiz_colors[random.randrange(0,5)] #<-- getting a new random color from the horizontal list (6 colors total)
+  ht.fillcolor(htnew_color)
   ht.goto(-350, tloc)
   ht.setheading(0)
 
   vt = trtl.Turtle(shape=s)
   vert_turtles.append(vt)
   vt.penup()
-  new_color = vert_colors.pop()
-  vt.fillcolor(new_color)
+  #new_color = vert_colors.pop()
+  vtnew_color = vert_colors[random.randrange(0,5)]#<-- getting a new random color from the vertical list (6 colors total)
+  vt.fillcolor(vtnew_color)
   vt.goto( -tloc, 350)
   vt.setheading(270)
   
   tloc += 50
+
 
 # Keeps turtles from exiting the canvas
 steps = 0
@@ -54,14 +58,14 @@ while len(horiz_turtles) > 0: #length of the list
             t.left(180)
             
 #Have turtles change color while intersecting
-x1 = ht.setheading(0)
-x2 = t.xcor()
-y1 = vt.setheading(270)
-y2 = t.vcor()
-if abs(x1-x2) == 20:
-  ht.fillcolor(new_color)
-if abs(y1-y2) == 20:
-  vt.fillcolor(new_color)
+    for ht in horiz_turtles:
+      for vt in vert_turtles:
+        if abs(ht.xcor() - vt.xcor()) < 20:
+          if abs(ht.xcor() - vt.xcor()) < 20:
+            ht.fillcolor(horiz_colors[random.randrange(0,5)])
+            vt.fillcolor(vert_colors[random.randrange(0,5)])
+
+
 
 
     
